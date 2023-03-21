@@ -12,7 +12,7 @@ public class WebExtraktor
         var htmlDocument = new HtmlDocument();
         htmlDocument.LoadHtml(html);
 
-        var divs = htmlDocument.DocumentNode.Descendants("div");
+        var docNode = htmlDocument.DocumentNode.Descendants();
 
         var liga = new Liga(Url);
 

@@ -1,0 +1,17 @@
+C:\Users\weis_\source\Repos\FusballDeScraper\FusballDeScraper\obj\Debug\net7.0\FusballDeScraper.csproj.AssemblyReference.cache
+C:\Users\weis_\source\Repos\FusballDeScraper\FusballDeScraper\obj\Debug\net7.0\FusballDeScraper.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\weis_\source\Repos\FusballDeScraper\FusballDeScraper\obj\Debug\net7.0\FusballDeScraper.AssemblyInfoInputs.cache
+C:\Users\weis_\source\Repos\FusballDeScraper\FusballDeScraper\obj\Debug\net7.0\FusballDeScraper.AssemblyInfo.cs
+C:\Users\weis_\source\Repos\FusballDeScraper\FusballDeScraper\obj\Debug\net7.0\FusballDeScraper.csproj.CoreCompileInputs.cache
+C:\Users\weis_\source\Repos\FusballDeScraper\FusballDeScraper\bin\Debug\net7.0\FusballDeScraper.exe
+C:\Users\weis_\source\Repos\FusballDeScraper\FusballDeScraper\bin\Debug\net7.0\FusballDeScraper.deps.json
+C:\Users\weis_\source\Repos\FusballDeScraper\FusballDeScraper\bin\Debug\net7.0\FusballDeScraper.runtimeconfig.json
+C:\Users\weis_\source\Repos\FusballDeScraper\FusballDeScraper\bin\Debug\net7.0\FusballDeScraper.dll
+C:\Users\weis_\source\Repos\FusballDeScraper\FusballDeScraper\bin\Debug\net7.0\FusballDeScraper.pdb
+C:\Users\weis_\source\Repos\FusballDeScraper\FusballDeScraper\bin\Debug\net7.0\HtmlAgilityPack.dll
+C:\Users\weis_\source\Repos\FusballDeScraper\FusballDeScraper\obj\Debug\net7.0\FusballDeScraper.csproj.CopyComplete
+C:\Users\weis_\source\Repos\FusballDeScraper\FusballDeScraper\obj\Debug\net7.0\FusballDeScraper.dll
+C:\Users\weis_\source\Repos\FusballDeScraper\FusballDeScraper\obj\Debug\net7.0\refint\FusballDeScraper.dll
+C:\Users\weis_\source\Repos\FusballDeScraper\FusballDeScraper\obj\Debug\net7.0\FusballDeScraper.pdb
+C:\Users\weis_\source\Repos\FusballDeScraper\FusballDeScraper\obj\Debug\net7.0\FusballDeScraper.genruntimeconfig.cache
+C:\Users\weis_\source\Repos\FusballDeScraper\FusballDeScraper\obj\Debug\net7.0\ref\FusballDeScraper.dll
