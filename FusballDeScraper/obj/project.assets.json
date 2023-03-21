@@ -2942,19 +2942,21 @@
   },
   "packageFolders": {
     "C:\\Users\\weis_\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\weis_\\source\\Repos\\FusballDeScraper\\FusballDeScraper\\FusballDeScraper.csproj",
+      "projectUniqueName": "C:\\Users\\weis_\\OneDrive\\Dokumente\\GitHub\\FusballDeScraper\\FusballDeScraper\\FusballDeScraper.csproj",
       "projectName": "FusballDeScraper",
-      "projectPath": "C:\\Users\\weis_\\source\\Repos\\FusballDeScraper\\FusballDeScraper\\FusballDeScraper.csproj",
+      "projectPath": "C:\\Users\\weis_\\OneDrive\\Dokumente\\GitHub\\FusballDeScraper\\FusballDeScraper\\FusballDeScraper.csproj",
       "packagesPath": "C:\\Users\\weis_\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\weis_\\source\\Repos\\FusballDeScraper\\FusballDeScraper\\obj\\",
+      "outputPath": "C:\\Users\\weis_\\OneDrive\\Dokumente\\GitHub\\FusballDeScraper\\FusballDeScraper\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
         "C:\\Users\\weis_\\AppData\\Roaming\\NuGet\\NuGet.Config",

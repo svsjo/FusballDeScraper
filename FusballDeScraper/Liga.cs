@@ -6,7 +6,7 @@ public class Liga
     public List<TorschuetzenEintrag> Torschuetzen { get; set; }
     public List<Mannschaft> Mannschaften { get; set; }
 
-    public Liga(string url)
+    public Liga()
     {
         Tabelle = new List<VereinPlatzierung>();
         Torschuetzen = new List<TorschuetzenEintrag>();
