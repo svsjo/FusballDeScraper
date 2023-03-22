@@ -2,10 +2,8 @@
 
 public class Spiel
 {
-    protected DateTime Anpfiff { get; set; }
-    protected string? HeimTeam { get; set; }
-    protected string? AuswaertsTeam { get; set; }
-    protected String? Platzart { get; set; }
-    protected String? Ort { get; set; }
-    protected String? Schiedsrichter { get; set; }
+    public string? HeimTeam { get; set; }
+    public string? AuswaertsTeam { get; set; }
+    public String? Platzart { get; set; }
+    public String? Ort { get; set; }
 }

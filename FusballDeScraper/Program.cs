@@ -13,6 +13,12 @@ public class Program
 
         datenhaltung.Liga = webExtraktor.GetLiga(url).Result;
 
+        Console.WriteLine("Welchen Verein möchtest du analysieren? Hier die Optionen: \n");
+        datenhaltung.Liga.Mannschaften.ForEach(x => Console.WriteLine(x.Name));
+        Console.WriteLine();
+
+        var mannschaft = Console.ReadLine();
+
         // Do Filters
 
         // Display Results

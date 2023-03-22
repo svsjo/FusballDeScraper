@@ -1,6 +1,8 @@
 ﻿using HtmlAgilityPack;
 using System.Net.Http;
 using System;
+using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace FusballDeScraper;
 
@@ -113,23 +115,95 @@ public class WebExtraktor
         {
             Name = htmlDocument.DocumentNode.Descendants("h2").FirstOrDefault()?.InnerText,
             AlleEinsaezte = GetAlleEinsaetze(htmlDocument),
-            LetzteSpiele = GetAbgeschlosseneSpiele(url),
-            NaechsteSpiele = GetNaechsteSpiele(url)
+            LetzteSpiele = GetAbgeschlosseneSpiele(htmlDocument).Result,
+            NaechsteSpiele = GetNaechsteSpiele(htmlDocument)
         };
 
         return mannschaft;
     }
 
-    private List<Spiel> GetNaechsteSpiele(string url)
+    private List<Spiel> GetNaechsteSpiele(HtmlDocument htmlDocument)
     {
         var naechsteSpiele = new List<Spiel>();
+
+        var allRowsRaw = htmlDocument
+            .DocumentNode
+            .Descendants("div")
+            .FirstOrDefault(x => x.Id == "id-team-matchplan-table")
+            ?.Descendants("table")
+            .FirstOrDefault()
+            ?.Descendants("tbody")
+            .FirstOrDefault()
+            ?.Descendants("tr")
+            .ToList();
+
+        var importantRows = new List<HtmlNode>();
+
+        for (var i = 0; i < allRowsRaw.Count; i++)
+        {
+            if ((i + 1) % 3 == 0)
+            {
+                importantRows.Add(allRowsRaw.ElementAt(i));
+            }
+        }
+
+        foreach (var row in importantRows)
+        {
+            var url = row.Descendants("td").First(x => x.HasClass("column-detail")).Descendants("a").First().Attributes["href"].Value;
+
+            naechsteSpiele.Add(GetSpiel(url).Result);
+        }
 
         return naechsteSpiele;
     }
 
-    private List<AbgeschlossenesSpiel> GetAbgeschlosseneSpiele(string url)
+    private async Task<List<AbgeschlossenesSpiel>> GetAbgeschlosseneSpiele(HtmlDocument oldHtmlDocument)
     {
+        var newUrl = oldHtmlDocument
+            .DocumentNode
+            .Descendants("section")
+            .FirstOrDefault(x => x.Id == "id-team-matchplan")
+            ?.Descendants("li")
+            .ElementAt(1)
+            .Descendants("a")
+            .FirstOrDefault()
+            ?.Attributes["href"]
+            .Value;
+
+        var httpClient = new HttpClient();
+        var html = await httpClient.GetStringAsync(newUrl);
+        var htmlDocument = new HtmlDocument();
+        htmlDocument.LoadHtml(html);
+
         var letzteSpiele = new List<AbgeschlossenesSpiel>();
+
+        var allRowsRaw = htmlDocument
+            .DocumentNode
+            .Descendants("div")
+            .FirstOrDefault(x => x.Id == "id-team-matchplan-table")
+            ?.Descendants("table")
+            .FirstOrDefault()
+            ?.Descendants("tbody")
+            .FirstOrDefault()
+            ?.Descendants("tr")
+            .ToList();
+
+        var importantRows = new List<HtmlNode>();
+
+        for (var i = 0; i < allRowsRaw.Count; i++)
+        {
+            if ((i + 1) % 3 == 0)
+            {
+                importantRows.Add(allRowsRaw.ElementAt(i));
+            }
+        }
+
+        foreach (var row in importantRows)
+        {
+            var url = row.Descendants("td").First(x => x.HasClass("column-detail")).Descendants("a").First().Attributes["href"].Value;
+
+            letzteSpiele.Add(GetAbgeschlossenesSpiel(url).Result);
+        }
 
         return letzteSpiele;
     }
@@ -215,17 +289,262 @@ public class WebExtraktor
         return spieler;
     }
 
-    private Spiel GetSpiel(string url)
+    private async Task<Spiel> GetSpiel(string url)
     {
-        var spiel = new Spiel();
+        var httpClient = new HttpClient();
+        var html = await httpClient.GetStringAsync(url);
+        var htmlDocument = new HtmlDocument();
+        htmlDocument.LoadHtml(html);
+
+        var containerInfos = htmlDocument
+            .DocumentNode
+            ?.Descendants("section")
+            .FirstOrDefault(x => x.Id == "stage")
+            ?.Descendants("div")
+            .FirstOrDefault(x => x.HasClass("stage-content"));
+
+        var ortString = containerInfos
+            ?.Descendants("div")
+            .FirstOrDefault(x => x.HasClass("stage-header"))
+            ?.Descendants("a")
+            .FirstOrDefault(x => x.HasClass("location"))
+            ?.InnerText
+            .Replace("\t", "")
+            .Replace("\n", "");
+
+        var splitOrt = new List<string>();
+        if (string.IsNullOrEmpty(ortString))
+        {
+            splitOrt.Add("Unbekannt");
+        }
+        else
+        {
+            splitOrt = ortString.Split(",").ToList();
+        }
+
+        var platz = splitOrt[0];
+        splitOrt.RemoveAt(0);
+
+        var restString = "Unbekannt";
+        if (splitOrt.Count > 1)
+        {
+            restString = splitOrt.Aggregate((x, y) => x + y);
+        }
+
+
+        var mannschaftString = containerInfos
+            ?.Descendants("div")
+            .FirstOrDefault(x => x.HasClass("stage-body"))
+            ?.Descendants("div")
+            .ToList();
+
+        var homeTeam = mannschaftString
+            ?.FirstOrDefault(x => x.HasClass("team-home"))
+            ?.Descendants("div")
+            .FirstOrDefault(x => x.HasClass("team-name"))
+            ?.Descendants("a")
+            .FirstOrDefault()
+            ?.InnerText
+            .Replace("\t", "")
+            .Replace("\n", "");
+
+        var auswaertsTeam = mannschaftString
+            ?.FirstOrDefault(x => x.HasClass("team-away"))
+            ?.Descendants("div")
+            .FirstOrDefault(x => x.HasClass("team-name"))
+            ?.Descendants("a")
+            .FirstOrDefault()
+            ?.InnerText
+            .Replace("\t", "")
+            .Replace("\n", "");
+
+        var spiel = new Spiel()
+        {
+            HeimTeam = homeTeam,
+            AuswaertsTeam = auswaertsTeam,
+            Platzart = platz,
+            Ort = restString,
+        };
 
         return spiel;
     }
 
-    private AbgeschlossenesSpiel GetAbgeschlossenesSpiel(string url)
+    private async Task<AbgeschlossenesSpiel> GetAbgeschlossenesSpiel(string url)
     {
-        var abgeschlossenesSpiel = new AbgeschlossenesSpiel();
+        var httpClient = new HttpClient();
+        var html = await httpClient.GetStringAsync(url);
+        var htmlDocument = new HtmlDocument();
+        htmlDocument.LoadHtml(html);
 
-        return abgeschlossenesSpiel;
+        var containerInfos = htmlDocument
+            .DocumentNode
+            .Descendants("section")
+            .FirstOrDefault(x => x.Id == "stage")
+            ?.Descendants("div")
+            .FirstOrDefault(x => x.HasClass("stage-content"));
+
+        var ortString = containerInfos
+            ?.Descendants("div")
+            .FirstOrDefault(x => x.HasClass("stage-header"))
+            ?.Descendants("a")
+            .FirstOrDefault(x => x.HasClass("location"))
+            ?.InnerText
+            .Replace("\t", "")
+            .Replace("\n", "");
+
+        var splitOrt = new List<string>();
+
+        if (string.IsNullOrEmpty(ortString))
+        {
+            splitOrt.Add("Unbekannt");
+        }
+        else
+        {
+            splitOrt = ortString.Split(",").ToList();
+        }
+
+        var platz = splitOrt[0];
+        splitOrt.RemoveAt(0);
+
+        var restString = "Unbekannt";
+        if (splitOrt.Count > 1)
+        {
+            restString = splitOrt.Aggregate((x, y) => x + y);
+        }
+
+        var mannschaftString = containerInfos
+            ?.Descendants("div")
+            .FirstOrDefault(x => x.HasClass("stage-body"))
+            ?.Descendants("div")
+            .ToList();
+
+        var homeTeam = mannschaftString
+            ?.FirstOrDefault(x => x.HasClass("team-home"))
+            ?.Descendants("div")
+            .FirstOrDefault(x => x.HasClass("team-name"))
+            ?.Descendants("a")
+            .FirstOrDefault()
+            ?.InnerText
+            .Replace("\t", "")
+            .Replace("\n", "");
+
+        var auswaertsTeam = mannschaftString
+            ?.FirstOrDefault(x => x.HasClass("team-away"))
+            ?.Descendants("div")
+            .FirstOrDefault(x => x.HasClass("team-name"))
+            ?.Descendants("a")
+            .FirstOrDefault()
+            ?.InnerText
+            .Replace("\t", "")
+            .Replace("\n", "");
+
+        var spielverlauf = htmlDocument
+            .DocumentNode
+            ?.Descendants("section")
+            .FirstOrDefault(x => x.Id == "course")
+            ?.Descendants("div")
+            .FirstOrDefault(x => x.HasClass("match-course"))
+            ?.Descendants("div")
+            .Where(x => x.HasClass("events"))
+            .ToList();
+
+        var events = new List<HtmlNode>();
+
+        if (spielverlauf != default)
+        {
+            foreach (var halbzeit in spielverlauf)
+            {
+                events.AddRange(halbzeit
+                    .Descendants("div")
+                    .First(x => x.HasClass("container"))
+                    .Descendants("div")
+                    .Where(x => x.HasClass("row-event event-right") || x.HasClass("row-event event-left"))
+                    .ToList());
+            }
+        }
+
+        var abgesagt = events.Count == 0 ? true : false;
+
+        var spielereignisse = GetSpielEreignisse(events);
+
+        var toreHeim = spielereignisse.Select(x => x is Tor && x.Team == Team.HEIM).Count();
+        var toreAusw = spielereignisse.Select(x => x is Tor && x.Team == Team.AUSWAERTS).Count();
+
+        var spiel = new AbgeschlossenesSpiel()
+        {
+            HeimTeam = homeTeam,
+            AuswaertsTeam = auswaertsTeam,
+            Platzart = platz,
+            Ort = restString,
+            ToreAuswaerts = toreAusw,
+            ToreHeim = toreHeim,
+            Spielereignisse = spielereignisse,
+            Abgesagt = abgesagt
+        };
+
+        return spiel;
+    }
+
+    private List<Spielereignis> GetSpielEreignisse(List<HtmlNode> events)
+    {
+        var spielereignisse = new List<Spielereignis>();
+
+        foreach (var spielEvent in events)
+        {
+            var minute = int.Parse(spielEvent
+                .Descendants("div")
+                .First(x => x.HasClass("column-time"))
+                .Descendants("div")
+                .First(x => x.HasClass("valign-inner"))
+                .InnerText
+                .Replace("’", ""));
+
+            var team = spielEvent.HasClass("row-event event-right") ? Team.AUSWAERTS : Team.HEIM;
+
+            var playerOrEvent = spielEvent
+                .Descendants("div")
+                .First(x => x.HasClass("column-player"))
+                .Descendants("div")
+                .First(x => x.HasClass("valign-cell"));
+
+            var player = playerOrEvent.Descendants("a").FirstOrDefault();
+            var auswechslung = playerOrEvent.Descendants("div").FirstOrDefault(x => x.InnerText == "Auswechslung");
+
+            if (player == default && auswechslung == default)
+            {
+                /* Karte */
+                var karte = playerOrEvent.InnerText;
+                var kartenArt = karte switch
+                {
+                    "Gelbe Karte" => Kartenart.GELB,
+                    "Gelb-Rote Karte" => Kartenart.GELBROT,
+                    "Rote Karte" => Kartenart.ROT,
+                    _ => throw new ArgumentOutOfRangeException()
+                };
+
+                var karteEreignis = new Karte()
+                {
+                    Minute = minute,
+                    Team = team,
+                    Kartenart = kartenArt
+                };
+
+                spielereignisse.Add(karteEreignis);
+            }
+            else
+            {
+                /* Tor */
+                var tor = new Tor()
+                {
+                    Minute = minute,
+                    Team = team,
+                    Torschuetze = GetSpieler(player.Attributes["href"].Value).Result
+                };
+
+                spielereignisse.Add(tor);
+            }
+        }
+
+        return spielereignisse;
     }
 }
