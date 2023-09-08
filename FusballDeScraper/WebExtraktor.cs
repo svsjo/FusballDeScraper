@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System;
 using System.Linq;
+using System.Net;
 using System.Runtime.InteropServices;
 
 namespace FusballDeScraper;
@@ -458,7 +459,7 @@ public class WebExtraktor
                     .Descendants("div")
                     .First(x => x.HasClass("container"))
                     .Descendants("div")
-                    .Where(x => x.HasClass("row-event event-right") || x.HasClass("row-event event-left"))
+                    .Where(x => x.HasClass("row-event"))
                     .ToList());
             }
         }
@@ -467,8 +468,8 @@ public class WebExtraktor
 
         var spielereignisse = GetSpielEreignisse(events);
 
-        var toreHeim = spielereignisse.Select(x => x is Tor && x.Team == Team.HEIM).Count();
-        var toreAusw = spielereignisse.Select(x => x is Tor && x.Team == Team.AUSWAERTS).Count();
+        var toreHeim = spielereignisse.Count(x => x is Tor && x.Team == Team.HEIM);
+        var toreAusw = spielereignisse.Count(x => x is Tor && x.Team == Team.AUSWAERTS);
 
         var spiel = new AbgeschlossenesSpiel()
         {
@@ -491,15 +492,17 @@ public class WebExtraktor
 
         foreach (var spielEvent in events)
         {
-            var minute = int.Parse(spielEvent
+            var minuteString = spielEvent
                 .Descendants("div")
                 .First(x => x.HasClass("column-time"))
                 .Descendants("div")
                 .First(x => x.HasClass("valign-inner"))
                 .InnerText
-                .Replace("’", ""));
+                .Replace("&rsquo;", "");
 
-            var team = spielEvent.HasClass("row-event event-right") ? Team.AUSWAERTS : Team.HEIM;
+            var minute = HandleNachspielZeit(minuteString);
+
+            var team = spielEvent.HasClass("event-right") ? Team.AUSWAERTS : Team.HEIM;
 
             var playerOrEvent = spielEvent
                 .Descendants("div")
@@ -508,9 +511,9 @@ public class WebExtraktor
                 .First(x => x.HasClass("valign-cell"));
 
             var player = playerOrEvent.Descendants("a").FirstOrDefault();
-            var auswechslung = playerOrEvent.Descendants("div").FirstOrDefault(x => x.InnerText == "Auswechslung");
+            var spielerWechsel = playerOrEvent.Descendants("div").Where(x => x.HasClass("substitute")).ToList();
 
-            if (player == default && auswechslung == default)
+            if (player == default && !spielerWechsel.Any())
             {
                 /* Karte */
                 var karte = playerOrEvent.InnerText;
@@ -531,7 +534,7 @@ public class WebExtraktor
 
                 spielereignisse.Add(karteEreignis);
             }
-            else
+            else if (!spielerWechsel.Any())
             {
                 /* Tor */
                 var tor = new Tor()
@@ -543,8 +546,29 @@ public class WebExtraktor
 
                 spielereignisse.Add(tor);
             }
+            else /* Auswechslung */
+            {
+                if(spielerWechsel.Count < 2) continue;
+
+                var wechsel = new Wechsel()
+                {
+                    Team = team,
+                    Minute = minute,
+                    Einwechslung = GetSpieler(spielerWechsel.ElementAt(0).Descendants("a").FirstOrDefault()!.Attributes["href"].Value).Result,
+                    Auswechslung = GetSpieler(spielerWechsel.ElementAt(1).Descendants("a").FirstOrDefault()!.Attributes["href"].Value).Result
+                };
+
+                spielereignisse.Add(wechsel);
+            }
         }
 
         return spielereignisse;
+    }
+
+    private int HandleNachspielZeit(string minuteString)
+    {
+        if (!minuteString.Contains("+")) return int.Parse(minuteString);
+        var minutes = minuteString.Split("+");
+        return int.Parse(minutes[0]) + int.Parse(minutes[1]);
     }
 }

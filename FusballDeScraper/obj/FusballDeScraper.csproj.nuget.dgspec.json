@@ -1,24 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\weis_\\OneDrive\\Dokumente\\GitHub\\FusballDeScraper\\FusballDeScraper\\FusballDeScraper.csproj": {}
+    "C:\\Users\\ENTEP04\\Desktop\\Infos\\EigeneProjektarbeiten\\DH_Projekte\\FusballDeScraper\\FusballDeScraper\\FusballDeScraper.csproj": {}
   },
   "projects": {
-    "C:\\Users\\weis_\\OneDrive\\Dokumente\\GitHub\\FusballDeScraper\\FusballDeScraper\\FusballDeScraper.csproj": {
+    "C:\\Users\\ENTEP04\\Desktop\\Infos\\EigeneProjektarbeiten\\DH_Projekte\\FusballDeScraper\\FusballDeScraper\\FusballDeScraper.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\weis_\\OneDrive\\Dokumente\\GitHub\\FusballDeScraper\\FusballDeScraper\\FusballDeScraper.csproj",
+        "projectUniqueName": "C:\\Users\\ENTEP04\\Desktop\\Infos\\EigeneProjektarbeiten\\DH_Projekte\\FusballDeScraper\\FusballDeScraper\\FusballDeScraper.csproj",
         "projectName": "FusballDeScraper",
-        "projectPath": "C:\\Users\\weis_\\OneDrive\\Dokumente\\GitHub\\FusballDeScraper\\FusballDeScraper\\FusballDeScraper.csproj",
-        "packagesPath": "C:\\Users\\weis_\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\weis_\\OneDrive\\Dokumente\\GitHub\\FusballDeScraper\\FusballDeScraper\\obj\\",
+        "projectPath": "C:\\Users\\ENTEP04\\Desktop\\Infos\\EigeneProjektarbeiten\\DH_Projekte\\FusballDeScraper\\FusballDeScraper\\FusballDeScraper.csproj",
+        "packagesPath": "C:\\Users\\ENTEP04\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ENTEP04\\Desktop\\Infos\\EigeneProjektarbeiten\\DH_Projekte\\FusballDeScraper\\FusballDeScraper\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\weis_\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ENTEP04\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -27,8 +27,8 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://swenexusprod.lossburg.arburg.com/repository/nuget-staging-group/index.json": {},
+          "https://swenexusprod.lossburg.arburg.com/repository/nuget-staging-proxy-swegitlab/index.json": {}
         },
         "frameworks": {
           "net7.0": {
@@ -48,7 +48,7 @@
           "dependencies": {
             "HtmlAgilityPack": {
               "target": "Package",
-              "version": "[1.11.46, )"
+              "version": "[1.11.52, )"
             },
             "System.Net.Http": {
               "target": "Package",
@@ -71,7 +71,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
         }
       }
     }
