@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ENTEP04\\Desktop\\Infos\\EigeneProjektarbeiten\\DH_Projekte\\FusballDeScraper\\FusballDeScraper\\FusballDeScraper.csproj": {}
+    "C:\\Users\\ENTEP04\\Desktop\\Mitnehmen auf neuen PC\\Infos\\EigeneProjektarbeiten\\DH_Projekte\\FusballDeScraper\\FusballDeScraper\\FusballDeScraper.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ENTEP04\\Desktop\\Infos\\EigeneProjektarbeiten\\DH_Projekte\\FusballDeScraper\\FusballDeScraper\\FusballDeScraper.csproj": {
+    "C:\\Users\\ENTEP04\\Desktop\\Mitnehmen auf neuen PC\\Infos\\EigeneProjektarbeiten\\DH_Projekte\\FusballDeScraper\\FusballDeScraper\\FusballDeScraper.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ENTEP04\\Desktop\\Infos\\EigeneProjektarbeiten\\DH_Projekte\\FusballDeScraper\\FusballDeScraper\\FusballDeScraper.csproj",
+        "projectUniqueName": "C:\\Users\\ENTEP04\\Desktop\\Mitnehmen auf neuen PC\\Infos\\EigeneProjektarbeiten\\DH_Projekte\\FusballDeScraper\\FusballDeScraper\\FusballDeScraper.csproj",
         "projectName": "FusballDeScraper",
-        "projectPath": "C:\\Users\\ENTEP04\\Desktop\\Infos\\EigeneProjektarbeiten\\DH_Projekte\\FusballDeScraper\\FusballDeScraper\\FusballDeScraper.csproj",
+        "projectPath": "C:\\Users\\ENTEP04\\Desktop\\Mitnehmen auf neuen PC\\Infos\\EigeneProjektarbeiten\\DH_Projekte\\FusballDeScraper\\FusballDeScraper\\FusballDeScraper.csproj",
         "packagesPath": "C:\\Users\\ENTEP04\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ENTEP04\\Desktop\\Infos\\EigeneProjektarbeiten\\DH_Projekte\\FusballDeScraper\\FusballDeScraper\\obj\\",
+        "outputPath": "C:\\Users\\ENTEP04\\Desktop\\Mitnehmen auf neuen PC\\Infos\\EigeneProjektarbeiten\\DH_Projekte\\FusballDeScraper\\FusballDeScraper\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",

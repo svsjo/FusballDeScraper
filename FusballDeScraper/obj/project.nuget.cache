@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "H2FkmptpFJ3raBjgp3X+RChTeLWoThcLpoRXAHiFupmTWEdgB80qj77cKZI2//W1oAD/XCC97bM+xNbTUpGLtg==",
+  "dgSpecHash": "j3n70zUq3T5Nd5bbVZv4/RxI1x2oarVQ4wRgzsmLiKiNmvUHbVGdrMQHDYTalb9jfkrU4A8bGiT9s/Tzfn03TA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\ENTEP04\\Desktop\\Infos\\EigeneProjektarbeiten\\DH_Projekte\\FusballDeScraper\\FusballDeScraper\\FusballDeScraper.csproj",
+  "projectFilePath": "C:\\Users\\ENTEP04\\Desktop\\Mitnehmen auf neuen PC\\Infos\\EigeneProjektarbeiten\\DH_Projekte\\FusballDeScraper\\FusballDeScraper\\FusballDeScraper.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ENTEP04\\.nuget\\packages\\htmlagilitypack\\1.11.52\\htmlagilitypack.1.11.52.nupkg.sha512",
     "C:\\Users\\ENTEP04\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.1\\microsoft.netcore.platforms.1.1.1.nupkg.sha512",

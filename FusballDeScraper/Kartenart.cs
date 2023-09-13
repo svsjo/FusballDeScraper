@@ -4,5 +4,6 @@ public enum Kartenart
 {
     GELB,
     GELBROT,
-    ROT
+    ROT,
+    UNDEFINIERT
 }

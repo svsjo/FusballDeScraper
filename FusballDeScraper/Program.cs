@@ -1,4 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
+using System.Text.Json;
 using FusballDeScraper;
 
 public class Program
@@ -24,9 +25,28 @@ public class Program
 
         // Display Results
 
-        /* zweite mannschaft
-abgeschlossene Spiele
-GetAbgeschlossenesSpiel
-    */
+        /*  zweite mannschaft
+            abgeschlossene Spiele
+            GetAbgeschlossenesSpiel
+            zweites Spiel
+        */
     }
 }
+
+public class DataManager
+{
+    private string _path = "data.json";
+
+    public void SaveResults(Datenhaltung datenhaltung)
+    {
+        var jsonString = JsonSerializer.Serialize(datenhaltung);
+        System.IO.File.WriteAllText(_path, jsonString);
+    }
+
+    public Datenhaltung? GetResults()
+    {
+        var jsonString = System.IO.File.ReadAllText(_path);
+        return JsonSerializer.Deserialize<Datenhaltung>(jsonString);
+    }
+}
+
