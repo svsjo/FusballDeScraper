@@ -66,3 +66,10 @@ C:\Users\ENTEP04\Desktop\Mitnehmen auf neuen PC\Infos\EigeneProjektarbeiten\DH_P
 C:\Users\ENTEP04\Desktop\Mitnehmen auf neuen PC\Infos\EigeneProjektarbeiten\DH_Projekte\FusballDeScraper\FusballDeScraper\obj\Debug\net7.0\FusballDeScraper.pdb
 C:\Users\ENTEP04\Desktop\Mitnehmen auf neuen PC\Infos\EigeneProjektarbeiten\DH_Projekte\FusballDeScraper\FusballDeScraper\obj\Debug\net7.0\FusballDeScraper.genruntimeconfig.cache
 C:\Users\ENTEP04\Desktop\Mitnehmen auf neuen PC\Infos\EigeneProjektarbeiten\DH_Projekte\FusballDeScraper\FusballDeScraper\obj\Debug\net7.0\ref\FusballDeScraper.dll
+C:\Users\weis_\OneDrive\Dokumente\GitHub\FusballDeScraper\FusballDeScraper\bin\Debug\net7.0\selenium-manager\linux\selenium-manager
+C:\Users\weis_\OneDrive\Dokumente\GitHub\FusballDeScraper\FusballDeScraper\bin\Debug\net7.0\selenium-manager\macos\selenium-manager
+C:\Users\weis_\OneDrive\Dokumente\GitHub\FusballDeScraper\FusballDeScraper\bin\Debug\net7.0\selenium-manager\windows\selenium-manager.exe
+C:\Users\weis_\OneDrive\Dokumente\GitHub\FusballDeScraper\FusballDeScraper\bin\Debug\net7.0\WebDriver.dll
+C:\Users\weis_\OneDrive\Dokumente\GitHub\FusballDeScraper\FusballDeScraper\bin\Debug\net7.0\System.Text.Encodings.Web.dll
+C:\Users\weis_\OneDrive\Dokumente\GitHub\FusballDeScraper\FusballDeScraper\bin\Debug\net7.0\System.Text.Json.dll
+C:\Users\weis_\OneDrive\Dokumente\GitHub\FusballDeScraper\FusballDeScraper\bin\Debug\net7.0\runtimes\browser\lib\net7.0\System.Text.Encodings.Web.dll

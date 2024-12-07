@@ -1,5 +1,4 @@
 ﻿using System.Runtime.CompilerServices;
-using System.Text.Json;
 using FusballDeScraper;
 
 public class Program
@@ -10,7 +9,7 @@ public class Program
         var webExtraktor = new WebExtraktor();
 
         const string url =
-            @"https://www.fussball.de/spieltagsuebersicht/bezirksliga-herren-bezirk-offenburg-bezirksliga-herren-saison2223-suedbaden/-/staffel/02IKSBQ9U4000006VS5489B3VVETK79U-G#!/";
+            @"https://www.fussball.de/spieltagsuebersicht/bezirksliga-herren-bezirk-offenburg-bezirksliga-herren-saison2425-suedbaden/-/staffel/02PTTC6NHK000006VS5489B4VVTKJJ35-G#!/";
 
         datenhaltung.Liga = webExtraktor.GetLiga(url).Result;
 
@@ -32,21 +31,3 @@ public class Program
         */
     }
 }
-
-public class DataManager
-{
-    private string _path = "data.json";
-
-    public void SaveResults(Datenhaltung datenhaltung)
-    {
-        var jsonString = JsonSerializer.Serialize(datenhaltung);
-        System.IO.File.WriteAllText(_path, jsonString);
-    }
-
-    public Datenhaltung? GetResults()
-    {
-        var jsonString = System.IO.File.ReadAllText(_path);
-        return JsonSerializer.Deserialize<Datenhaltung>(jsonString);
-    }
-}
-

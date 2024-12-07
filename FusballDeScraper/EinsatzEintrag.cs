@@ -3,6 +3,7 @@
 public class EinsatzEintrag
 {
     public Spieler? Spieler { get; init; }
+    public int Rang { get; init; }
     public int Einsaetze { get; init; }
     public int EinsatzMinuten { get; init; }
     public int Tore { get; init; }

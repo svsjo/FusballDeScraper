@@ -6,4 +6,6 @@ public class Spiel
     public string? AuswaertsTeam { get; set; }
     public String? Platzart { get; set; }
     public String? Ort { get; set; }
+    public DateTime? DateTime { get; set; }
+    public int Spieltag { get; set; }
 }

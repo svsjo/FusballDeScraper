@@ -17,12 +17,14 @@ public class WebExtraktor
 
         var urlScorer = url
             .Replace("spieltagsuebersicht", "torjaeger") + "section/top-scorer";
+
         liga.Torschuetzen = await GetTorschuetzen(urlScorer);
 
         var mannschaftsUrls = liga.Tabelle
             .Select(x => x.UrlMannschaft)
             .Where(x => !string.IsNullOrEmpty(x))
             .ToList();
+
         foreach (var mannschaftsUrl in mannschaftsUrls)
         {
             liga.Mannschaften.Add(GetMannschaft(mannschaftsUrl!).Result);
@@ -67,6 +69,14 @@ public class WebExtraktor
             tabelle.Add(vereinPlatzierung);
         }
 
+        Console.WriteLine("===================================================================");
+        Console.WriteLine("Tabelle:");
+        tabelle.ForEach(x => 
+        {
+            Console.WriteLine($"{x.Rang}: {x.Mannschaft} | {x.Gewonnen}/{x.Unentschieden}/{x.Verloren} | {x.Tore}:{x.Gegentore} | {x.Tordifferenz} | {x.Punkte}P");
+        });
+        Console.WriteLine("===================================================================");
+
         return tabelle;
     }
 
@@ -102,6 +112,14 @@ public class WebExtraktor
             alleTorschuetzen.Add(torschuetze);
         }
 
+        Console.WriteLine("\n===================================================================");
+        Console.WriteLine("Torjäger:");
+        alleTorschuetzen.ForEach(x => 
+        {
+            Console.WriteLine($"{x.Rang}: {x.Spieler?.Name} - {x.Mannschaft} - {x.Tore} Tore");
+        });
+        Console.WriteLine("===================================================================");
+
         return alleTorschuetzen;
     }
 
@@ -112,15 +130,33 @@ public class WebExtraktor
         var htmlDocument = new HtmlDocument();
         htmlDocument.LoadHtml(html);
 
+        string name = htmlDocument.DocumentNode.Descendants("h2").FirstOrDefault()?.InnerText;
+
+        Console.WriteLine("\n===================================================================");
+        Console.WriteLine($"Mannschaft {name}:");
         var mannschaft = new Mannschaft()
         {
-            Name = htmlDocument.DocumentNode.Descendants("h2").FirstOrDefault()?.InnerText,
-            AlleEinsaezte = GetAlleEinsaetze(htmlDocument),
+            Name = name,
+            AlleEinsaezte = GetAlleEinsaetze(htmlDocument), // TODO JW: Aus Spielen auslesen, wenn hier nicht freigegeben!
             LetzteSpiele = GetAbgeschlosseneSpiele(htmlDocument).Result,
             NaechsteSpiele = GetNaechsteSpiele(htmlDocument)
         };
+        Console.WriteLine("===================================================================");
 
         return mannschaft;
+    }
+
+    private (List<Spieler> heim, List<Spieler> auswaerts) GetStartAufstellung(HtmlDocument htmlDocument)
+    {
+        List<Spieler> heim = new();
+        List<Spieler> auswaerts = new();
+
+        var playerLinks = htmlDocument.DocumentNode.SelectNodes("//a[contains(@href, '/spielerprofil/')]");
+
+        heim = playerLinks?.Select(x => GetSpieler(x.Attributes["href"].Value).Result).ToList()?? new();
+        auswaerts = playerLinks?.Select(x => GetSpieler(x.Attributes["href"].Value).Result).ToList() ?? new();
+
+        return (heim, auswaerts);
     }
 
     private List<Spiel> GetNaechsteSpiele(HtmlDocument htmlDocument)
@@ -148,6 +184,8 @@ public class WebExtraktor
             }
         }
 
+        Console.WriteLine("\nNächste Spiele:");
+
         foreach (var row in importantRows)
         {
             var url = row.Descendants("td").First(x => x.HasClass("column-detail")).Descendants("a").First().Attributes["href"].Value;
@@ -163,7 +201,7 @@ public class WebExtraktor
         var newUrl = oldHtmlDocument
             .DocumentNode
             .Descendants("section")
-            .FirstOrDefault(x => x.Id == "id-team-matchplan")
+            .FirstOrDefault(x => x.Id == "id-team-matchplan") // TODO JW: Ggf. bearbeiten
             ?.Descendants("li")
             .ElementAt(1)
             .Descendants("a")
@@ -199,6 +237,8 @@ public class WebExtraktor
             }
         }
 
+        Console.WriteLine("\nLetzte Spiele:");
+
         foreach (var row in importantRows)
         {
             var url = row.Descendants("td").First(x => x.HasClass("column-detail")).Descendants("a").First().Attributes["href"].Value;
@@ -224,7 +264,11 @@ public class WebExtraktor
             .Descendants("div")
             .FirstOrDefault(x => x.HasClass("team-squad-table"));
 
-        if (section!.Descendants("p").Any(x => x.HasClass("headline"))) return alleEinsaetze;
+        if (section!.Descendants("p").Any(x => x.HasClass("headline")))
+        {
+            Console.WriteLine("Einsatztabelle nicht freigegeben!");
+            return alleEinsaetze;
+        }
 
         var allRowsRaw = section
             .Descendants("table")
@@ -233,6 +277,8 @@ public class WebExtraktor
             .FirstOrDefault()
             ?.Descendants("tr")
             .ToList();
+
+        var rang = 1;
 
         foreach (HtmlNode row in allRowsRaw)
         {
@@ -247,11 +293,21 @@ public class WebExtraktor
                 Spieler = GetSpieler(fields[0].Descendants("a").FirstOrDefault()!.Attributes["href"].Value).Result,
                 Einsaetze = einsaetze,
                 EinsatzMinuten = einsatzMinuten,
-                Tore = tore
+                Tore = tore,
+                Rang = rang
             };
 
             alleEinsaetze.Add(einsatz);
+
+            rang++;
         }
+
+        Console.WriteLine("\nKaderübersicht:");
+
+        alleEinsaetze.ForEach(x => 
+        {
+            Console.WriteLine($"{x.Rang}: {x.Spieler.Name} - {x.Einsaetze} Spiele - {x.EinsatzMinuten} Min - {x.Tore} Tore - {x.MinutenProTor} Min/Tor - {x.MinutenProEinsatz} Min/Einsatz");
+        });
 
         return alleEinsaetze;
     }
@@ -367,6 +423,10 @@ public class WebExtraktor
             Ort = restString,
         };
 
+        // TODO JW: Spieltag und Datum, aussedem dann Logik das jedes Spiel mir einmal ausgelesen wird
+
+        Console.WriteLine($"Spiel: {spiel.HeimTeam} vs {spiel.AuswaertsTeam} - {spiel.Platzart} {spiel.Ort}");
+
         return spiel;
     }
 
@@ -468,6 +528,8 @@ public class WebExtraktor
 
         var spielereignisse = GetSpielEreignisse(events);
 
+        var (heimAuf, auswaertsAuf) = GetStartAufstellung(htmlDocument); // TODO JW: Fix
+
         var toreHeim = spielereignisse.Count(x => x is Tor && x.Team == Team.HEIM);
         var toreAusw = spielereignisse.Count(x => x is Tor && x.Team == Team.AUSWAERTS);
 
@@ -480,8 +542,39 @@ public class WebExtraktor
             ToreAuswaerts = toreAusw,
             ToreHeim = toreHeim,
             Spielereignisse = spielereignisse,
-            Abgesagt = abgesagt
+            Abgesagt = abgesagt,
+            AufstellungHeim = heimAuf,
+            AufstellungAuswaerts = auswaertsAuf
         };
+
+        // TODO JW: Spieltag und Datum, aussedem dann Logik das jedes Spiel mir einmal ausgelesen wird
+
+        Console.WriteLine($"\nSpiel: {spiel.HeimTeam} ({spiel.ToreHeim}) vs ({spiel.ToreAuswaerts}) {spiel.AuswaertsTeam} - {spiel.Platzart} {spiel.Ort} - Abgesagt: {spiel.Abgesagt}");
+
+        Console.WriteLine("\nAustellung heim: ");
+        spiel.AufstellungHeim.ForEach(x => Console.Write($"{x.Name}, "));
+        Console.WriteLine();
+
+        Console.WriteLine("\nAustellung auswärts: ");
+        spiel.AufstellungAuswaerts.ForEach(x => Console.Write($"{x.Name}, "));
+        Console.WriteLine();
+
+        Console.WriteLine("\nEreignisse im Spiel:");
+        spiel.Spielereignisse.ForEach(x =>
+        {
+            if (x is Wechsel wechsel)
+            {
+                Console.WriteLine($"Wechsel {x.Team} - {x.Minute} Minute: {wechsel.Einwechslung.Name} für {wechsel.Auswechslung.Name}");
+            }
+            else if (x is Karte karte)
+            {
+                Console.WriteLine($"Karte {x.Team} - {x.Minute} Minute: {karte.Kartenart}");
+            }
+            else if (x is Tor tor)
+            {
+                Console.WriteLine($"Tor {x.Team} - {x.Minute} Minute: {tor.Torschuetze?.Name}");
+            }
+        });
 
         return spiel;
     }
