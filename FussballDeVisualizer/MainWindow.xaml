@@ -1,0 +1,29 @@
+﻿<Window x:Class="FussballDeVisualizer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+        xmlns:viewmodels="clr-namespace:FussballDeVisualizer.ViewModels" 
+        Title="FussballDe Crawler" 
+        Height="1080" Width="1920" WindowState="Maximized">
+
+    <Window.Resources>
+    </Window.Resources>
+
+    <Window.DataContext>
+        <!-- Binde das MainViewModel -->
+        <viewmodels:MainViewModel />
+    </Window.DataContext>
+    <DockPanel>
+        <TabControl ItemsSource="{Binding Tabs}" SelectedItem="{Binding SelectedTab}">
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Title}" />
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+            <TabControl.ContentTemplate>
+                <DataTemplate>
+                    <ContentControl Content="{Binding View}" />
+                </DataTemplate>
+            </TabControl.ContentTemplate>
+        </TabControl>
+    </DockPanel>
+</Window>

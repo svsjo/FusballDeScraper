@@ -1,0 +1,12 @@
+C:\Users\weis_\OneDrive\Dokumente\GitHub\FusballDeScraper\FussballDeAnalyzer\bin\Debug\net7.0\FussballDeAnalyzer.deps.json
+C:\Users\weis_\OneDrive\Dokumente\GitHub\FusballDeScraper\FussballDeAnalyzer\bin\Debug\net7.0\FussballDeAnalyzer.dll
+C:\Users\weis_\OneDrive\Dokumente\GitHub\FusballDeScraper\FussballDeAnalyzer\bin\Debug\net7.0\FussballDeAnalyzer.pdb
+C:\Users\weis_\OneDrive\Dokumente\GitHub\FusballDeScraper\FussballDeAnalyzer\obj\Debug\net7.0\FussballDeAnalyzer.csproj.AssemblyReference.cache
+C:\Users\weis_\OneDrive\Dokumente\GitHub\FusballDeScraper\FussballDeAnalyzer\obj\Debug\net7.0\FussballDeAnalyzer.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\weis_\OneDrive\Dokumente\GitHub\FusballDeScraper\FussballDeAnalyzer\obj\Debug\net7.0\FussballDeAnalyzer.AssemblyInfoInputs.cache
+C:\Users\weis_\OneDrive\Dokumente\GitHub\FusballDeScraper\FussballDeAnalyzer\obj\Debug\net7.0\FussballDeAnalyzer.AssemblyInfo.cs
+C:\Users\weis_\OneDrive\Dokumente\GitHub\FusballDeScraper\FussballDeAnalyzer\obj\Debug\net7.0\FussballDeAnalyzer.csproj.CoreCompileInputs.cache
+C:\Users\weis_\OneDrive\Dokumente\GitHub\FusballDeScraper\FussballDeAnalyzer\obj\Debug\net7.0\FussballDeAnalyzer.dll
+C:\Users\weis_\OneDrive\Dokumente\GitHub\FusballDeScraper\FussballDeAnalyzer\obj\Debug\net7.0\refint\FussballDeAnalyzer.dll
+C:\Users\weis_\OneDrive\Dokumente\GitHub\FusballDeScraper\FussballDeAnalyzer\obj\Debug\net7.0\FussballDeAnalyzer.pdb
+C:\Users\weis_\OneDrive\Dokumente\GitHub\FusballDeScraper\FussballDeAnalyzer\obj\Debug\net7.0\ref\FussballDeAnalyzer.dll

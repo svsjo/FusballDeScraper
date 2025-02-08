@@ -1,0 +1,57 @@
+﻿<UserControl x:Class="FussballDeVisualizer.Views.MainWindowTabs.TableTabView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:FussballDeVisualizer.Views.MainWindowTabs" 
+             xmlns:popuphelpers="clr-namespace:FussballDeVisualizer.ViewModels.PopupHelpers"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <!-- Template für positive Punktedifferenzen -->
+        <DataTemplate x:Key="PositiveTemplate">
+            <TextBlock Text="{Binding Value}" Foreground="Green" HorizontalAlignment="Center" />
+        </DataTemplate>
+
+        <!-- Template für negative Punktedifferenzen -->
+        <DataTemplate x:Key="NegativeTemplate">
+            <TextBlock Text="{Binding Value}" Foreground="Red" HorizontalAlignment="Center" />
+        </DataTemplate>
+
+        <!-- PunkteTemplateSelector binden -->
+        <popuphelpers:PunkteTemplateSelector x:Key="PunkteTemplateSelector" PositiveTemplate="{StaticResource PositiveTemplate}" NegativeTemplate="{StaticResource NegativeTemplate}" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*" />
+            <!-- Erste Tabelle -->
+            <RowDefinition Height="3*" />
+            <!-- Punkte-Matrix -->
+        </Grid.RowDefinitions>
+
+        <!-- Tabelle der Liga -->
+        <DataGrid Grid.Row="0" ItemsSource="{Binding Liga.Tabelle}" 
+                  AutoGenerateColumns="False" 
+                  SelectionMode="Extended"
+                  CanUserAddRows="False" 
+                  CanUserDeleteRows="False" 
+                  IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Rang" Binding="{Binding Rang}" />
+                <DataGridTextColumn Header="Mannschaft" Binding="{Binding Mannschaft}" />
+                <DataGridTextColumn Header="Spiele" Binding="{Binding Spiele}" />
+                <DataGridTextColumn Header="Gewonnen" Binding="{Binding Gewonnen}" />
+                <DataGridTextColumn Header="Unentschieden" Binding="{Binding Unentschieden}" />
+                <DataGridTextColumn Header="Verloren" Binding="{Binding Verloren}" />
+                <DataGridTextColumn Header="Tore" Binding="{Binding Tore}" />
+                <DataGridTextColumn Header="Gegentore" Binding="{Binding Gegentore}" />
+                <DataGridTextColumn Header="Tordifferenz" Binding="{Binding Tordifferenz}" />
+                <DataGridTextColumn Header="Punkte" Binding="{Binding Punkte}" />
+                <DataGridTextColumn Header="Vorsprung" Binding="{Binding Vorsprung}" />
+                <DataGridTextColumn Header="Rueckstand" Binding="{Binding Rueckstand}" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <ContentControl Grid.Row="1" Content="{Binding Matrix}" />
+    </Grid>
+</UserControl>

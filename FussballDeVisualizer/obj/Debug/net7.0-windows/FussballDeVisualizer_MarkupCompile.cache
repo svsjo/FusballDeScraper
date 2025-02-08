@@ -1,0 +1,20 @@
+﻿FussballDeVisualizer
+
+
+winexe
+C#
+.cs
+C:\Users\weis_\OneDrive\Dokumente\GitHub\FusballDeScraper\FussballDeVisualizer\obj\Debug\net7.0-windows\
+FussballDeVisualizer
+none
+false
+TRACE;DEBUG;NET;NET7_0;NETCOREAPP
+C:\Users\weis_\OneDrive\Dokumente\GitHub\FusballDeScraper\FussballDeVisualizer\App.xaml
+14-1284523942
+31649501291
+381138057799
+219-184705741
+MainWindow.xaml;Views\MainWindowTabs\ConfigTabView.xaml;Views\MainWindowTabs\FairnessTableTabView.xaml;Views\MainWindowTabs\GamedayTabView.xaml;Views\MainWindowTabs\ScorerTabView.xaml;Views\MainWindowTabs\TableTabView.xaml;Views\MannschaftWindowTabs\MannschaftAnalysenTabView.xaml;Views\MannschaftWindowTabs\MannschaftEinsatzTabView.xaml;Views\MannschaftWindowTabs\MannschaftGamesTabView.xaml;Views\MannschaftWindowTabs\MannschaftTableTabView.xaml;Views\MannschaftWindowTabs\public MannschaftMainWindowView.xaml;Views\PopupHelpers\SpielerView.xaml;Views\PopupHelpers\SpielView.xaml;Views\PopupHelpers\StaerkenSchwachenView.xaml;
+
+False
+
